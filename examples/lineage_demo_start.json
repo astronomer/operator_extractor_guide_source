@@ -1,0 +1,150 @@
+{
+    "eventTime": "2022-10-02T13:00:53.241804Z",
+    "eventType": "START",
+    "inputs": [],
+    "job": {
+      "facets": {
+        "sql": {
+          "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+          "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/SqlJobFacet",
+          "query": "\n            CREATE TABLE IF NOT EXISTS COURSE_REGISTRATIONS (\n                CREATE_DATE                 DATE,\n                COURSE_ID                   NUMBER,\n                COURSE_NAME                 TEXT,\n                SIGNUP_URL                  TEXT,\n                NUM_STUDENTS                NUMBER,\n                TOTAL_REVENUE               NUMBER\n            );\n            "
+        }
+      },
+      "name": "lineage_demo.table_init.init_course_r",
+      "namespace": "uninhabited-magnify-7821"
+    },
+    "outputs": [
+      {
+        "facets": {
+          "dataSource": {
+            "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+            "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/DataSourceDatasetFacet",
+            "name": "***://demo_postgres_db",
+            "uri": "demo_postgres_db"
+          },
+          "schema": {
+            "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+            "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/SchemaDatasetFacet",
+            "fields": [
+              {
+                "name": "CREATE_DATE",
+                "type": "DATE"
+              },
+              {
+                "name": "COURSE_ID",
+                "type": "NUMBER"
+              },
+              {
+                "name": "COURSE_NAME",
+                "type": "TEXT"
+              },
+              {
+                "name": "SIGNUP_URL",
+                "type": "TEXT"
+              },
+              {
+                "name": "NUM_STUDENTS",
+                "type": "NUMBER"
+              },
+              {
+                "name": "TOTAL_REVENUE",
+                "type": "NUMBER"
+              }
+            ]
+          }
+        },
+        "name": "COURSE_REGISTRATIONS",
+        "namespace": "***://demo_postgres_db"
+      }
+    ],
+    "producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+    "run": {
+      "facets": {
+        "airflow_runArgs": {
+          "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+          "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/BaseFacet",
+          "externalTrigger": true
+        },
+        "airflow_version": {
+          "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+          "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/BaseFacet",
+          "airflowVersion": "2.3.4+astro.1",
+          "openlineageAirflowVersion": "0.13.0",
+          "operator": "airflow.operators.postgres_operator.PostgresOperator",
+          "taskInfo": {
+            "_BaseOperator__from_mapped": false,
+            "_BaseOperator__init_kwargs": {
+              "depends_on_past": false,
+              "email_on_failure": false,
+              "email_on_retry": false,
+              "owner": "registry",
+              "***_conn_id": "demo_postgres_db",
+              "sql": "\n            CREATE TABLE IF NOT EXISTS COURSE_REGISTRATIONS (\n                CREATE_DATE                 DATE,\n                COURSE_ID                   NUMBER,\n                COURSE_NAME                 TEXT,\n                SIGNUP_URL                  TEXT,\n                NUM_STUDENTS                NUMBER,\n                TOTAL_REVENUE               NUMBER\n            );\n            ",
+              "start_date": "2022-10-01T00:00:00+00:00",
+              "task_id": "init_course_r"
+            },
+            "_BaseOperator__instantiated": true,
+            "_dag": {
+              "dag_id": "lineage_demo",
+              "tags": []
+            },
+            "_inlets": [],
+            "_log": "<Logger airflow.task.operators (DEBUG)>",
+            "_outlets": [],
+            "autocommit": false,
+            "data_assertion_fail": false,
+            "data_assertion_fail_probability": 0,
+            "depends_on_past": false,
+            "do_xcom_push": true,
+            "downstream_task_ids": "{'course_etl.insert_course_c'}",
+            "email_on_failure": false,
+            "email_on_retry": false,
+            "executor_config": {},
+            "ignore_first_depends_on_past": true,
+            "inlets": [],
+            "outlets": [],
+            "owner": "registry",
+            "params": "{}",
+            "pool": "default_pool",
+            "pool_slots": 1,
+            "***_conn_id": "demo_postgres_db",
+            "priority_weight": 1,
+            "queue": "default",
+            "retries": 0,
+            "retry_delay": "0:05:00",
+            "retry_exponential_backoff": false,
+            "schema": "public",
+            "schema_change": false,
+            "schema_change_probability": 0,
+            "scheme": "***",
+            "sql": "\n            CREATE TABLE IF NOT EXISTS COURSE_REGISTRATIONS (\n                CREATE_DATE                 DATE,\n                COURSE_ID                   NUMBER,\n                COURSE_NAME                 TEXT,\n                SIGNUP_URL                  TEXT,\n                NUM_STUDENTS                NUMBER,\n                TOTAL_REVENUE               NUMBER\n            );\n            ",
+            "start_date": "2022-10-01T00:00:00+00:00",
+            "task_group": "<airflow.utils.task_group.TaskGroup object at 0x4041613370>",
+            "task_id": "table_init.init_course_r",
+            "trigger_rule": "all_success",
+            "upstream_task_ids": "set()",
+            "wait_for_downstream": false,
+            "weight_rule": "downstream"
+          }
+        },
+        "nominalTime": {
+          "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+          "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/NominalTimeRunFacet",
+          "nominalStartTime": "2022-10-02T13:00:51.888628Z"
+        },
+        "parentRun": {
+          "_producer": "https://github.com/OpenLineage/OpenLineage/tree/0.13.0/integration/airflow",
+          "_schemaURL": "https://raw.githubusercontent.com/OpenLineage/OpenLineage/main/spec/OpenLineage.json#/definitions/ParentRunFacet",
+          "job": {
+            "name": "lineage_demo",
+            "namespace": "uninhabited-magnify-7821"
+          },
+          "run": {
+            "runId": "a8769175-3e3e-3f24-bf53-1601485119e9"
+          }
+        }
+      },
+      "runId": "8081588e-9f65-4920-93f8-24a5c7b1d531"
+    }
+  }
+  
