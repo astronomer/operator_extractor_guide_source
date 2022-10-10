@@ -18,9 +18,9 @@ def lineage_demo():
 
     with TaskGroup("table_init") as table_init:
         init_course_r = PostgresOperator(
-            task_id='init_course_r',
-            postgres_conn_id='demo_postgres_db',
-            sql='''
+            task_id="init_course_r",
+            postgres_conn_id="demo_postgres_db",
+            sql="""
             CREATE TABLE IF NOT EXISTS COURSE_REGISTRATIONS (
                 CREATE_DATE                 DATE,
                 COURSE_ID                   NUMBER,
@@ -29,15 +29,15 @@ def lineage_demo():
                 NUM_STUDENTS                NUMBER,
                 TOTAL_REVENUE               NUMBER
             );
-            '''
+            """,
         )
         init_course_r
 
     with TaskGroup("course_etl") as course_etl:
         insert_course_r = PostgresOperator(
-            task_id='insert_course_c',
-            postgres_conn_id='demo_postgres_db',
-            sql='''
+            task_id="insert_course_c",
+            postgres_conn_id="demo_postgres_db",
+            sql="""
             INSERT INTO COURSE_REGISTRATIONS(CREATE_DATE, COURSE_ID, COURSE_NAME, SIGNUP_URL, NUM_STUDENTS, TOTAL_REVENUE)
                 SELECT
                     CREATE_DATE
@@ -48,10 +48,11 @@ def lineage_demo():
                     , TOTAL_REVENUE
                 FROM 
                     tmp_course_registrations;
-            '''
+            """,
         )
         insert_course_r
 
     table_init >> course_etl
+
 
 dag = lineage_demo()

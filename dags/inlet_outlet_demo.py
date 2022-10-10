@@ -12,17 +12,14 @@ import pprint
 def python_operator(x):
     print(x)
 
+
 def create_table(cluster, database, name):
-    return Table(
-        cluster=cluster,
-        database=database,
-        name=name
-    )
+    return Table(cluster=cluster, database=database, name=name)
+
 
 def create_file(url):
-    return File(
-        url=url
-    )
+    return File(url=url)
+
 
 @dag(
     start_date=days_ago(1),
@@ -37,23 +34,38 @@ def inlet_outlet_demo():
 
     # - setting up input table
     input_table = Table(cluster="my_cluster_1", database="temp", name="input_data-1")
-    input_table.columns.append(Column(name="id", description="id of the data", data_type="integer"))
-    input_table.columns.append(Column(name="data", description="content of the data", data_type="varchar"))
+    input_table.columns.append(
+        Column(name="id", description="id of the data", data_type="integer")
+    )
+    input_table.columns.append(
+        Column(name="data", description="content of the data", data_type="varchar")
+    )
 
     # - setting up output table
     output = Table(cluster="my_cluster_1", database="op", name="op_table-1")
-    output.columns.append(Column(name="id", description="id of the data", data_type="integer"))
-    output.columns.append(Column(name="analyzed", description="analyzed result", data_type="varchar"))
-    output.columns.append(Column(name="analyzed_dt", description="timestamp of the analysis", data_type="timestamp"))
+    output.columns.append(
+        Column(name="id", description="id of the data", data_type="integer")
+    )
+    output.columns.append(
+        Column(name="analyzed", description="analyzed result", data_type="varchar")
+    )
+    output.columns.append(
+        Column(
+            name="analyzed_dt",
+            description="timestamp of the analysis",
+            data_type="timestamp",
+        )
+    )
 
     t1 = PythonOperator(
-        task_id='test-operator',
-        python_callable = python_operator,
-        op_kwargs = {"x" : "Apache Airflow"},
+        task_id="test-operator",
+        python_callable=python_operator,
+        op_kwargs={"x": "Apache Airflow"},
         inlets=[input_table],
-        outlets=[output]
+        outlets=[output],
     )
 
     begin >> t1 >> end
+
 
 dag = inlet_outlet_demo()

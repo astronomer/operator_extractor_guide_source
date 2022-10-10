@@ -14,6 +14,7 @@ def python_operator(x):
     print(x)
     return "Hello"
 
+
 # When using the DAG decorator, the "dag" argument doesn't need to be specified for each task.
 # The "dag_id" value defaults to the name of the function it is decorating if not explicitly set.
 # In this example, the "dag_id" value would be "example_dag_advanced".
@@ -22,19 +23,20 @@ def python_operator(x):
     schedule_interval=None,
     default_view="graph",
     catchup=False,
-    tags=["demo"], # If set, this tag is shown in the DAG view of the Airflow UI
+    tags=["demo"],  # If set, this tag is shown in the DAG view of the Airflow UI
 )
 def extractor_demo():
     begin = EmptyOperator(task_id="begin")
     end = EmptyOperator(task_id="end", trigger_rule=TriggerRule.ALL_DONE)
 
     t1 = MyPythonOperator(
-        task_id='test-operator',
+        task_id="test-operator",
         python_callable=python_operator,
-        op_kwargs={"x":"Apache Airflow"},
-        provide_context=True
+        op_kwargs={"x": "Apache Airflow"},
+        provide_context=True,
     )
 
     begin >> t1 >> end
+
 
 dag = extractor_demo()
