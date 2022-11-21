@@ -7,13 +7,13 @@ from typing import List
 class CsvToParquetOperator(BaseOperator):
     def __init__(
         self,
-        lz: str,
+        path_to_csv: str,
         output_path: str,
         partition_by: List[str],
         **kwargs
     ) -> None:
         super().__init__(**kwargs)
-        self.lz: str = lz
+        self.path_to_csv: str = path_to_csv
         self.output_path: str = output_path
         self.partition_by: List[str] = partition_by
 
@@ -23,7 +23,7 @@ class CsvToParquetOperator(BaseOperator):
     # hook used. See LocalFileSystemToS3Operator for an example:
     # https://registry.astronomer.io/providers/amazon/modules/localfilesystemtos3operator
         pd.read_csv(
-            filepath_or_buffer=self.lz,
+            filepath_or_buffer=self.path_to_csv,
             header=0,
         ).to_parquet(
             path=self.output_path,
