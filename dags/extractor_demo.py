@@ -6,7 +6,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.utils.trigger_rule import TriggerRule
 from airflow.decorators import dag
 from airflow.lineage.entities import Table, Column, File
-from include.demo_operators import MyPythonOperator
+from include.operators.demo_operator import MyPythonOperator
 import pprint
 
 
